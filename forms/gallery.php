@@ -39,6 +39,17 @@ function getThumb($imgfile)
     return $return;
 }
 
+function F($o)
+{
+    if(isset($o))
+    {
+        return $o;
+    }
+    else {
+        return '';
+    }
+}
+
 function ShowGalery($photoarray)
 {
     if (isset($photoarray))
@@ -46,36 +57,56 @@ function ShowGalery($photoarray)
         $rootH = $_SERVER['DOCUMENT_ROOT'].'/test';
         $tmpl = $rootH .'/templates/gallery.php';
         $rezult = file_get_contents( $tmpl );
-
-        $html='<div class="lineset"><ul id="thumbs">';
-        $i=0;
-        foreach($photoarray as $data)
+        if(!isset($photoarray[0]['fake']))
         {
-            $url = '/img/obj/'. $data['id_buildin'].'/'.$data['photofile'];
-            $info = '<div class="item"><div class="wrap-text"><div><strong>'.$data['descr'].'</strong><br>';
-            $info .= '<span class="info"><strong>'. date('d.m.Y',strtotime ($data['datetm'])).'</strong><br>';
-            //$info .= $data['etap'].'</span></div></div>';
-            $info .= '</span></div></div>';
-            $fullinfo = $data['descr'].'|'.date('d.m.Y H:i:s',strtotime ($data['datetm'])).'|'.$data['etap'];
-            if ($i==0)
+            $html='<div class="lineset"><ul id="thumbs">';
+            $i=0;
+            foreach($photoarray as $data)
             {
-                $html .="<li imgurl='/test".$url."' info='$fullinfo' class='linebox' selected>$info";
-                $actimg= '/test'.$url;
-                $bignam =  $data['descr'];
-                $bigdat = date('d.m.Y H:i:s',strtotime ($data['datetm']));
-                $bigtyp = $data['etap'];
-                $idbuilding =  $data['id_buildin'];
+                if (isset($data['datetm']))
+                {
+                    $datfmtd = date('d.m.Y',strtotime ($data['datetm']));
+                    $dttmfmd = date('d.m.Y H:i:s',strtotime ($data['datetm'])); 
+                }
+                else {
+                    $datfmtd ='';
+                    $dttmfmd =''; 
+                }
+                
+                $url = '/img/obj/'. $data['id_buildin'].'/'.$data['photofile'];
+                $info = '<div class="item"><div class="wrap-text"><div><strong>'.$data['descr'].'</strong><br>';
+                $info .= '<span class="info"><strong>'. $datfmtd.'</strong><br>';
+                //$info .= $data['etap'].'</span></div></div>';
+                $info .= '</span></div></div>';
+                $fullinfo = $data['descr'].'|'. $dttmfmd.'|'.$data['etap'];
+                if ($i==0)
+                {
+                    $html .="<li imgurl='/test".$url."' info='$fullinfo' class='linebox' selected>$info";
+                    $actimg= '/test'.$url;
+                    $bignam =  $data['descr'];
+                    $bigdat =  $dttmfmd;
+                    $bigtyp = $data['etap'];
+                    $idbuilding =  $data['id_buildin'];
+                }
+                else 
+                {
+                    $html .="<li imgurl='/test".$url."' info='$fullinfo'  class='linebox'>$info";
+                }
+                $f = getThumb($rootH . $url);
+                $html .="<img src='data:image/jpg;base64,$f'/></div></li>";
+                $i++;
             }
-            else 
-            {
-                $html .="<li imgurl='/test".$url."' info='$fullinfo'  class='linebox'>$info";
-            }
-            $f = getThumb($rootH . $url);
-            $html .="<img src='data:image/jpg;base64,$f'/></div></li>";
-            $i++;
+            $html .="</ul></div>";
         }
-        $html .="</ul></div>";
-
+        else {
+            $idbuilding=0;
+            $actimg='';
+            $bignam='';
+            $bigdat='';
+            $bigtyp='';
+            $html='';
+            $newpicture='';
+        }
         //новая картинка
         $newpicture = '<form id="frmphotos" action="#" onsubmit="return false;">
         <div class="form-group row">

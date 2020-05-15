@@ -1,6 +1,9 @@
 function StartDT($tab='table')
 {
-	//console.log($tab);
+  //console.log($tab);
+  if ( $.fn.dataTable.isDataTable( $tab ) ) {
+    $($tab).DataTable().destroy();
+  }
 	$($tab).DataTable({
  responsive: true,
   "language":{
@@ -35,9 +38,11 @@ function StartDT($tab='table')
  });
  
  $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
+  
+
  $($.fn.dataTable.tables(true)).DataTable()
  .columns.adjust()
- .responsive.recalc();
+ //.responsive.recalc();
  });
  
 }

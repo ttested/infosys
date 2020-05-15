@@ -33,10 +33,15 @@ if (isset($_POST["id"]))
 	
 	//echo '['.$sql.']';
 	
-	$query = mysqli_query($link,$sql)or die("Ошибка записи [$sql] \n ".mysqli_error($link));
+	mysqli_query($link,$sql)or die("Ошибка записи [$sql] \n ".mysqli_error($link));
+	$sql = "SELECT tab.id FROM $tabname tab ORDER BY tab.id DESC LIMIT 1";
+    $query = mysqli_query($link,$sql)or die("Ошибка получения последней записи `$sql`");
+	$data  = mysqli_fetch_assoc($query);
+	echo $data['id'];
 	closeDB($link);
 }
 else
 {
-    print_r($_POST);
+   echo 'Ошибка входных параметров: ';
+   print_r($_POST);
 } 

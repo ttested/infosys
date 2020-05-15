@@ -6,16 +6,16 @@
             <li class="nav-item">
                 <a class="nav-link active" data-toggle="tab" href="#description" dest="" cod="#id#">Описание</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item fade">
                 <a class="nav-link" data-toggle="tab" href="#smeta"  dest="#smeta_obj" cod="#id#">Смета</a>
             </li>
-			<li class="nav-item">
+			<li class="nav-item fade">
                 <a class="nav-link" data-toggle="tab" href="#executors" dest="#executorlist" cod="#id#">Исполнители</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item fade">
                 <a class="nav-link" data-toggle="tab" href="#photos" dest="#photoslist" cod="#id#">Фотографии</a>
             </li>
-			<li class="nav-item">
+			<li class="nav-item fade">
                 <a class="nav-link" data-toggle="tab" href="#docs" dest="#docslist" cod="#id#">Документация</a>
             </li>
         </ul>
@@ -64,6 +64,7 @@
 				</div>
 				<small id="addressHelp" class="form-text text-muted">Если у строения есть gps координаты, укажите их.</small>
 			</div>
+			<input type="hidden" class="form-control" id="id" name="id"  value="#id#">
 			</form>
         </div>
 		<!-- Смета -->
@@ -94,5 +95,5 @@
 			<div id='docslist'><div class='cssload-clock'></div></div>
 		</div>
 	 </div>
-	 <input type="hidden" class="form-control" id="id" name="id"  value="#id#">
+	 
 </div><!-- Конец карточки -->
