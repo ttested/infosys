@@ -1,7 +1,7 @@
 <?php
 function RunEngine()
 {
-	$tabname = 'building';
+	$tabname = 'smeta_pay';
 	
 	global $UserName;
 	global $UserPermission;
@@ -14,12 +14,12 @@ function RunEngine()
 	$Rules = ' ваши привилегии: '.$UserPermission;
 	$rez['title']='Добро пожаловать '.$UserName;
 	$rez['nav']= getMenu($UserCOD);
-	$rez['h1']= 'Объекты строительства';
+	$rez['h1']= 'Тарификация сметы';
 	$rez['footer']='Добро пожаловать '.$UserName.', '.$Rules;
 	
 	//Для вывода списка
 	$rez['context']='<div id="'.$tabname.'"></div>';
-	$rez['js'] ='<script src="./js/tools.js"></script><script src="./js/'.$tabname.'.js"></script><script>ShowBuilding();</script>';
+	$rez['js'] ='<script src="./js/tools.js"></script><script src="./js/'.$tabname.'.js"></script><script>ShowSmetaPay();</script>';
 	$rez['css']='<style>.pop{margin: 0 20px;}</style>';
 	return $rez;
 }

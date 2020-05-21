@@ -11,8 +11,8 @@ function P($v)
 
 function RunEngine()
 {
-	$table ='freepay';
-	$view = 'v_getpays';
+	$table ='smeta_pay';
+	$view = "v_$table";
 	
     $rootH = $_SERVER['DOCUMENT_ROOT'].'/test';
 	require_once ($rootH .'/core/grid.php');
@@ -62,9 +62,9 @@ function RunEngine()
 
 	//Служебные данные
 	$grid['tabid']=$table;
-	$grid['heder']='Все, что строиться, или уже построено';
+	$grid['heder']='Тарифы для объектов сметы по их детализации на дату';
 	$grid['title']='';
-	$grid['control']='<button type="button" class="btn btn-primary" data-toggle="modal_'.$table.'" data-target="#'.$table.'" onclick="EditBuilding(0,\'\',\'\',\'\',1);">Выдать средства</button>';	
+	$grid['control']='<button type="button" class="btn btn-primary" data-toggle="modal_'.$table.'" data-target="#'.$table.'" onclick="EditSmetaPay(0);">Новая таррификация</button>';	
 
 	
 	return getGrid($grid);

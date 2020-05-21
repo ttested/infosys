@@ -165,7 +165,7 @@ function getLine($line, $sel)
 	return $rez.$param.$endrez;
 }
 
-function fillData ($tab='nr32_smeta_obj' )
+function fillData ($tab='nr32_smeta_obj',$noSelected=false,$selfld='',$fval=0 )
 {
 	$rootH = $_SERVER['DOCUMENT_ROOT'].'/test';
 	require_once ($rootH .'/core/db.php');
@@ -177,20 +177,58 @@ function fillData ($tab='nr32_smeta_obj' )
 
 	$query = mysqli_query($link,$sql)or die("Ошибка чтения справочника ".$dat." `$sql`");
 	$option ='';
-    while($data  = mysqli_fetch_assoc($query))
+	if ($selfld=='')
     {
-        if ($option === '')
+		while($data  = mysqli_fetch_assoc($query))
 		{
-			$option .= getLine($data,'selected');
-			//$option .='<option value="'.$data[0].'" selected>'.$data[1].'</option>';
+			
+			if ($option === '')
+			{
+				if ($noSelected)
+				{
+					$option .= getLine($data,'');
+					//$option .='<option value="'.$data[0].'" selected>'.$data[1].'</option>';
+				}
+				else {
+					$option .= getLine($data,'selected');
+					//$option .='<option value="'.$data[0].'" selected>'.$data[1].'</option>';
+				}
+				
+			}
+			else
+			{
+				$option .= getLine($data,'');
+				//$option .='<option value="'.$data[0].'" selected>'.$data[1].'</option>';
+			}	
+			
 		}
-		else
+	}
+	else {
+		while($data  = mysqli_fetch_assoc($query))
 		{
-			$option .= getLine($data,'');
-			//$option .='<option value="'.$data[0].'" selected>'.$data[1].'</option>';
-		}	
-        
-    }
+			
+			if ($data[$selfld] === $fval)
+			{
+				if ($noSelected)
+				{
+					$option .= getLine($data,'');
+					//$option .='<option value="'.$data[0].'" selected>'.$data[1].'</option>';
+				}
+				else {
+					$option .= getLine($data,'selected');
+					//$option .='<option value="'.$data[0].'" selected>'.$data[1].'</option>';
+				}
+				
+			}
+			else
+			{
+				$option .= getLine($data,'');
+				//$option .='<option value="'.$data[0].'" selected>'.$data[1].'</option>';
+			}	
+			
+		}
+	}
+
 	mysqli_free_result($query);
 	closeDB($link);
 		

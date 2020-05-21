@@ -2,9 +2,10 @@ function StartDT($tab='table')
 {
   //console.log($tab);
   if ( $.fn.dataTable.isDataTable( $tab ) ) {
-    $($tab).DataTable().destroy();
-  }
-	$($tab).DataTable({
+ //let t=   $($tab).DataTable();
+ //t.destroy();
+ }
+ let table = $($tab).DataTable({
  responsive: true,
   "language":{
   "processing": "Подождите...",
@@ -38,13 +39,12 @@ function StartDT($tab='table')
  });
  
  $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
-  
-
- $($.fn.dataTable.tables(true)).DataTable()
- .columns.adjust()
- //.responsive.recalc();
- });
+  $($.fn.dataTable.tables(true)).DataTable()
+  .columns.adjust()
+  //.responsive.recalc();
+  });
  
+  return table;
 }
 
 function MarkDT(){
@@ -54,3 +54,8 @@ function MarkDT(){
     $(this).addClass('marked');
   });
 };
+
+function GetSelRow(table)
+{
+  return $(table).find('tr.marked').attr('rowcod');
+}
